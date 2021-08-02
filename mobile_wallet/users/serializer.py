@@ -1,5 +1,3 @@
-import json
-
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -9,13 +7,12 @@ from mobile_wallet.users.models import User
 from mobile_wallet.wallet.models import Wallet
 
 
-
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
         fields = ['email', 'username', 'phone_number', 'first_name',
-                 'last_name', 'gender']
+                  'last_name', 'gender', 'guid']
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -40,11 +37,11 @@ class RegistrationSerializer(serializers.ModelSerializer):
     """Serializers registration requests and creates a new user."""
 
     password = serializers.CharField(max_length=128, min_length=8,
-        write_only=True )
+                                     write_only=True)
 
     class Meta:
         model = User
-        fields = ['email', 'password',  'first_name', 'last_name',]
+        fields = ['email', 'password', 'first_name', 'last_name', ]
 
     def create(self, validated_data):
         # Use the `create_user` method to create a new user.
@@ -67,11 +64,11 @@ class LoginSerializer(serializers.Serializer):
         # Raise an exception if an email is not provided.
         if email is None:
             raise serializers.ValidationError(
-                'An email address is required to log in.' )
+                'An email address is required to log in.')
         # Raise an exception if a password is not provided.
         if password is None:
             raise serializers.ValidationError(
-                'A password is required to log in.' )
+                'A password is required to log in.')
 
         user = authenticate(username=email, password=password)
         if user is None:

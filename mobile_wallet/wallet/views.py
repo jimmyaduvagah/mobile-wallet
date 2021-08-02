@@ -1,17 +1,21 @@
-from django import db
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from mobile_wallet.wallet.serializer import (WalletSerializer, 
-    AccountEntrySerializer, TransactionSerializer, Wallet, AccountEntry,
+from mobile_wallet.wallet.serializer import (
+    WalletSerializer,
+    AccountEntrySerializer,
+    TransactionSerializer,
+    Wallet,
+    AccountEntry,
     Transaction)
-from mobile_wallet.wallet.models import (create_cr_entry, 
-    create_dr_entry, post_transaction)
-from mobile_wallet.currency.models import (get_user_currency_rate, 
-    get_usd_amount)
+from mobile_wallet.wallet.models import (create_cr_entry,
+                                         create_dr_entry, post_transaction)
+from mobile_wallet.currency.models import (get_user_currency_rate,
+                                           get_usd_amount)
+
 
 class WalletViewSet(viewsets.ModelViewSet):
     """
@@ -60,7 +64,8 @@ def transact(request):
             return Response(data=response_message)
         if user_wallet.balance < amount:
             response_message = {
-                "Balance":"Your Wallet Balance is lower than the Transaction amount of {}.".format(amount)}
+                "Balance": "Your Balance is lower than the Transaction amount of {}.".format(
+                    amount)}
             return Response(data=response_message)
 
         transaction_type = request.data.get('transaction_type', None)
@@ -87,7 +92,7 @@ def transact(request):
             except Exception:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
         else:
-            response_message = {"WrongTransactionType":"Wrong Transactin Type."}
+            response_message = {"WrongTransactionType": "Wrong Transactin Type."}
             return Response(data=response_message)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -125,6 +130,3 @@ def make_transfer(user_wallet, receiver_wallet, amount, usd_amount):
     user_wallet.save()
     receiver_wallet.balance -= transfer_amount
     receiver_wallet.save()
-
-
-

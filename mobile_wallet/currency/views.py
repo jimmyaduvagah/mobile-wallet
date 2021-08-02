@@ -4,7 +4,6 @@ from rest_framework.permissions import IsAuthenticated
 from mobile_wallet.currency.serializer import CurrencySerializer, Currency
 
 
-
 class CurrencyViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing User instances.

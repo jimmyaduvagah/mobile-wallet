@@ -2,7 +2,7 @@ import os
 import coinoxr
 from django.db import models
 
-from mobile_wallet.common.models import AbstractBase, CURRENCY_CODE
+from mobile_wallet.common.models import AbstractBase
 
 
 CURRENCY_CONVERSION_API_KEY = os.getenv('OPENEXCHANGERATEAPI', None)
@@ -26,5 +26,3 @@ def get_user_currency_rate(currency):
 
 def get_usd_amount(rate, amount):
     return round(amount / rate, 4)
-
-

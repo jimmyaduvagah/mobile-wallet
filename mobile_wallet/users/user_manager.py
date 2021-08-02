@@ -19,7 +19,7 @@ class UserManager(BaseUserManager):
         last_name = extra_fields.pop('last_name', True)
 
         user = self.model(username=username, email=self.normalize_email(email),
-               first_name=first_name, last_name=last_name)
+                          first_name=first_name, last_name=last_name)
         user.set_password(password)
         if user.guid is None:
             user.guid = uuid.uuid4()

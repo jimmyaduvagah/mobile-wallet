@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from django.core.validators import validate_email
 from django.conf import settings
 from django.contrib.auth.models import (
-    AbstractBaseUser, PermissionsMixin )
+    AbstractBaseUser, PermissionsMixin)
 from django.db import models
 from django.utils import timezone
 
@@ -18,17 +18,18 @@ GENDER_CHOICES = (
     ('FM', 'Female')
 )
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
     objects = UserManager()
 
     guid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    phone_number = models.CharField(db_index=True, max_length=32, unique=True, 
-        null=True, blank= True)
+    phone_number = models.CharField(db_index=True, max_length=32, unique=True,
+                                    null=True, blank=True)
     username = models.CharField(db_index=True, max_length=255, unique=True)
-    first_name = models.CharField(max_length=50, null=True, blank= True)
-    last_name = models.CharField(max_length=50, null=True, blank= True)
+    first_name = models.CharField(max_length=50, null=True, blank=True)
+    last_name = models.CharField(max_length=50, null=True, blank=True)
     email = models.EmailField(unique=True, validators=[validate_email])
     gender = models.CharField(null=True, blank=True, choices=GENDER_CHOICES, max_length=2)
     # profile_image = models.ImageField(null=True, blank=True, upload_to='avatars/')
@@ -42,7 +43,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=True, blank=True)
     created_on = models.DateTimeField(db_index=True, default=timezone.now)
     updated_on = models.DateTimeField(db_index=True, default=timezone.now)
-
 
     def get_short_name(self):
         return self.short_name
@@ -61,7 +61,6 @@ class User(AbstractBaseUser, PermissionsMixin):
                 [self.first_name, self.other_names, self.last_name])
         return " ".join([self.first_name, self.last_name])
 
-    
     def __str__(self):
         """Returns a string representation of this `User`."""
         return self.email
@@ -74,7 +73,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         return self._generate_jwt_token()
 
-
     def _generate_jwt_token(self):
         """
         Generates a JSON Web Token that stores this user's ID and has an expiry
@@ -86,5 +84,3 @@ class User(AbstractBaseUser, PermissionsMixin):
         }, settings.SECRET_KEY, algorithm='HS256')
 
         return token
-
-

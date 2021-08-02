@@ -1,11 +1,11 @@
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.exceptions import (PermissionDenied, NotAcceptable, 
-    MethodNotAllowed, ValidationError)
+from rest_framework.exceptions import (PermissionDenied, NotAcceptable,
+                                       MethodNotAllowed, ValidationError)
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
-from mobile_wallet.users.serializer import (User, UserSerializer, 
-    RegistrationSerializer, LoginSerializer)
+from mobile_wallet.users.serializer import (User, UserSerializer,
+                                            RegistrationSerializer, LoginSerializer)
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializer import MyTokenObtainPairSerializer
 

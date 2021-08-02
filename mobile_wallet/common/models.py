@@ -330,6 +330,7 @@ CURRENCY_CODE = [
     ('ZWL', 'ZIMBABWE')
 ]
 
+
 class AbstractBase(models.Model):
     """Base class for all models that belong to mobile_wallet application."""
 
