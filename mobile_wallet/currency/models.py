@@ -15,6 +15,7 @@ class Currency(AbstractBase):
 
     country = models.CharField(max_length=100)
     currency_iso_code = models.CharField(max_length=5, unique=True)
+    currency_name = models.CharField(max_length=100, null=True, blank=True)
     conversion_rate = models.DecimalField(
         max_digits=16, decimal_places=4, null=True, blank=True)
 
