@@ -1,3 +1,5 @@
+"""Users app serializer module."""
+
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -8,22 +10,28 @@ from mobile_wallet.wallet.models import Wallet
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """Users serializer class."""
 
     class Meta:
+        """Users serializer meta class."""
+
         model = User
         fields = ['email', 'username', 'phone_number', 'first_name',
                   'last_name', 'gender', 'guid']
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """Custom serializer class for JWT token."""
 
     @classmethod
     def get_token(cls, user):
+        """Get token class method."""
         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
 
         return token
 
     def validate(self, attrs):
+        """Validate method."""
         data = super().validate(attrs)
 
         data['email'] = self.user.email
@@ -34,16 +42,19 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
-    """Serializers registration requests and creates a new user."""
+    """User Registration rerializer creates a new user."""
 
     password = serializers.CharField(max_length=128, min_length=8,
                                      write_only=True)
 
     class Meta:
+        """User Registration rerializer meta class."""
+
         model = User
         fields = ['email', 'password', 'first_name', 'last_name', ]
 
     def create(self, validated_data):
+        """User Registration create method."""
         # Use the `create_user` method to create a new user.
         user = User.objects.create_user(**validated_data)
         wallet = Wallet(owner=user)
@@ -52,12 +63,15 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
+    """Users login serializer class."""
+
     email = serializers.CharField(max_length=255)
     username = serializers.CharField(max_length=255, required=False)
     password = serializers.CharField(max_length=128, write_only=True)
     token = serializers.CharField(max_length=255, read_only=True)
 
     def validate(self, data):
+        """Validate serializer function."""
         email = data.get('email', None)
         password = data.get('password', None)
 

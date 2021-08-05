@@ -1,3 +1,5 @@
+"""Module for app users models."""
+
 import uuid
 import jwt
 
@@ -20,6 +22,8 @@ GENDER_CHOICES = (
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """Our custom user class."""
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
     objects = UserManager()
@@ -45,39 +49,37 @@ class User(AbstractBaseUser, PermissionsMixin):
     updated_on = models.DateTimeField(db_index=True, default=timezone.now)
 
     def get_short_name(self):
+        """Funtion to return users short name."""
         return self.short_name
 
     def get_full_name(self):
+        """Funtion to return users full name."""
         return self.full_name
 
     @property
     def short_name(self):
+        """Property to return users short name."""
         return self.first_name
 
     @property
     def full_name(self):
+        """Property to return users full name."""
         if self.other_names:
             return " ".join(
                 [self.first_name, self.other_names, self.last_name])
         return " ".join([self.first_name, self.last_name])
 
     def __str__(self):
-        """Returns a string representation of this `User`."""
+        """Return a string representation of this `User`."""
         return self.email
 
     @property
     def token(self):
-        """
-        Allows us to get a user's token by calling `user.token` instead of
-        `user.generate_jwt_token().
-        """
+        """Allow to get a user's token by calling `user.token`."""
         return self._generate_jwt_token()
 
     def _generate_jwt_token(self):
-        """
-        Generates a JSON Web Token that stores this user's ID and has an expiry
-        date set to 1 day into the future.
-        """
+        """Generate a JSON Web Token."""
         dt = datetime.now() + timedelta(days=1)
         token = jwt.encode({
             'id': self.pk, 'exp': int(dt.strftime('%s'))

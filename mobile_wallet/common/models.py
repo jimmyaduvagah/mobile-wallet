@@ -1,3 +1,5 @@
+"""Defines common model utilities for all models in the project."""
+
 import uuid
 
 from django.db import models

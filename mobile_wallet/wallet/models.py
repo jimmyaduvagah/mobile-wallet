@@ -1,4 +1,5 @@
-# from decimal import Decimal
+"""Define Models and Python objects for wallet app."""
+
 from django.db import models, transaction
 from mobile_wallet.users.models import User
 from mobile_wallet.currency.models import Currency, AbstractBase
@@ -57,7 +58,6 @@ class Transaction(AbstractBase):
     @transaction.atomic
     def save(self, *args, **kwargs):
         """Save a transaction AND it's account entries entries."""
-
         self.dr_entry.save()
         self.cr_entry.save()
 
@@ -69,6 +69,7 @@ class Transaction(AbstractBase):
 
 # Helper functions
 def create_dr_entry(wallet, amount, transaction_type):
+    """Create debit entry."""
     args = {
         "account": wallet,
         "amount": amount,
@@ -78,6 +79,7 @@ def create_dr_entry(wallet, amount, transaction_type):
 
 
 def create_cr_entry(wallet, amount, transaction_type):
+    """Create credit entry."""
     kwargs = {
         "account": wallet,
         "amount": amount,
@@ -87,7 +89,7 @@ def create_cr_entry(wallet, amount, transaction_type):
 
 
 def post_transaction(dr_entry, cr_entry):
-    """process a transaction."""
+    """Save new transactions."""
     kwargs = {
         "dr_entry": dr_entry,
         "cr_entry": cr_entry, }

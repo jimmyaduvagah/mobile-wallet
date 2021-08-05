@@ -1,3 +1,5 @@
+"""Contain views for wallet app."""
+
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -18,9 +20,7 @@ from mobile_wallet.currency.models import (get_user_currency_rate,
 
 
 class WalletViewSet(viewsets.ModelViewSet):
-    """
-    A viewset for Wallet instances.
-    """
+    """A viewset for Wallet instances."""
 
     permission_classes = (IsAuthenticated,)
     serializer_class = WalletSerializer
@@ -28,9 +28,7 @@ class WalletViewSet(viewsets.ModelViewSet):
 
 
 class AccountEntryViewSet(viewsets.ModelViewSet):
-    """
-    A viewset for AccountEntry instances.
-    """
+    """A viewset for AccountEntry instances."""
 
     permission_classes = (IsAuthenticated,)
     serializer_class = AccountEntrySerializer
@@ -38,9 +36,7 @@ class AccountEntryViewSet(viewsets.ModelViewSet):
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
-    """
-    A viewset for Transaction instances.
-    """
+    """A viewset for Transaction instances."""
 
     permission_classes = (IsAuthenticated,)
     serializer_class = TransactionSerializer
@@ -49,10 +45,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
 @api_view(['POST'])
 def transact(request):
-    """
-    function for all transactions a user can make on the system ie Deposit,
-    Withdrawal, Transfer.
-    """
+    """Transact function to perform: Deposit, Withdrawal, Transfer."""
     amount = request.data.get('amount', 0)
     user = request.user
     if request.method == 'POST' and user and amount > 0:
@@ -99,8 +92,7 @@ def transact(request):
 
 
 def make_deposit_or_withdrawal(user_wallet, amount, usd_amount, transaction_type):
-    """Helper function for carrying out the actual deposit or withdrawal transactions."""
-
+    """Carry out the actual deposit or withdrawal transactions."""
     facilitating_wallet = Wallet.objects.get(owner__email="facilitatingUser@pesaexchange.com")
     if transaction_type == "deposit":
         dr_entry = create_dr_entry(user_wallet, usd_amount, 'D')
@@ -117,8 +109,7 @@ def make_deposit_or_withdrawal(user_wallet, amount, usd_amount, transaction_type
 
 
 def make_transfer(user_wallet, receiver_wallet, amount, usd_amount):
-    """Helper function for carrying out the actual Transfer transaction."""
-
+    """Carry out the actual Transfer transaction."""
     rate = 1
     if receiver_wallet.currency_default:
         rate = get_user_currency_rate(receiver_wallet.currency_default)

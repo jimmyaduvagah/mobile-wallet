@@ -1,3 +1,5 @@
+"""module for currency app models."""
+
 import os
 import coinoxr
 from django.db import models
@@ -18,6 +20,7 @@ class Currency(AbstractBase):
 
 
 def get_user_currency_rate(currency):
+    """Call the  open exchange currency API."""
     coinoxr.app_id = CURRENCY_CONVERSION_API_KEY
     rates = coinoxr.Latest().get(base="USD")
     rates = rates.body['rates']
@@ -25,4 +28,5 @@ def get_user_currency_rate(currency):
 
 
 def get_usd_amount(rate, amount):
+    """Convert the users' currency  to USD."""
     return round(amount / rate, 4)

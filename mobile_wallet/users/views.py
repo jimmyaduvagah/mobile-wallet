@@ -1,3 +1,5 @@
+"""Views module."""
+
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.exceptions import (PermissionDenied, NotAcceptable,
@@ -11,13 +13,13 @@ from .serializer import MyTokenObtainPairSerializer
 
 
 class ObtainTokenPairWithUser(TokenObtainPairView):
+    """Token view class."""
+
     serializer_class = MyTokenObtainPairSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    """
-    A viewset for viewing and editing User instances.
-    """
+    """A viewset for viewing and editing User instances."""
 
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
@@ -25,14 +27,13 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class UserRegisterViewSet(viewsets.ViewSet):
-    """
-    A viewset for registering new app users.
-    """
+    """A viewset for registering new app users."""
 
     permission_classes = (AllowAny, )
     serializer_class = RegistrationSerializer
 
     def create(self, request):
+        """Actual method for creating new users."""
         if request.method.lower() == 'post':
             if request.user.is_anonymous:
                 serializer = RegistrationSerializer(data=request.data)
@@ -60,10 +61,12 @@ class UserRegisterViewSet(viewsets.ViewSet):
 
 class LoginViewSet(viewsets.ViewSet):
     """A viewset for login."""
+
     permission_classes = (AllowAny,)
     serializer_class = LoginSerializer
 
     def create(self, request):
+        """Actual method for users login."""
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

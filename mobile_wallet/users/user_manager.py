@@ -1,3 +1,5 @@
+"""User manager module."""
+
 import uuid
 from django.contrib.auth.models import BaseUserManager
 from django.utils import timezone
@@ -8,7 +10,6 @@ class UserManager(BaseUserManager):
 
     def create_user(self, email, password=None, username=None, **extra_fields):
         """Create and return a `User`."""
-
         if email is None:
             raise TypeError('Users must have an email address.')
 
@@ -29,7 +30,7 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, username, email, password):
-        """ Create and return a `Super User`."""
+        """Create and return a `Super User`."""
         if password is None:
             raise TypeError('Superusers must have a password.')
 
