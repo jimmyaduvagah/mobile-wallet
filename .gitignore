@@ -42,6 +42,14 @@ coverage.xml
 coverage
 junitxml_report
 
+
+learning.todo.rst
+testing.py
+testingTutorials.rst
+todo.py
+
+
+
 # Translations
 *.mo
 *.pot
