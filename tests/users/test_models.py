@@ -1,14 +1,15 @@
 from django.test import TestCase
 from model_mommy import mommy
 
-from mobile_wallet.currency.models import Currency
+from mobile_wallet.users.models import User
 
 
-class TestCurrencyModel(TestCase):
+class TestUserModel(TestCase):
 
-    def test_create_currency(self):
-        att = mommy.make(Currency, currency_iso_code="KES",country="Kenya")
-        assert Currency.objects.count() == 1
+    def test_create_user(self):
+        att = mommy.make(User, first_name="Jommy", last_name="Jones",
+        email="testuser@asante.com", password="p@$$1%^&")
+        assert User.objects.count() == 1
         
 
     # def test_str_representation(self):

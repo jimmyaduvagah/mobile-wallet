@@ -30,4 +30,4 @@ def get_user_currency_rate(currency):
 
 def get_usd_amount(rate, amount):
     """Convert the users' currency  to USD."""
-    return round(amount / rate, 4)
+    return round(amount / rate, 2)
