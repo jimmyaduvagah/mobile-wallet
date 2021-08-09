@@ -40,7 +40,6 @@ class UserRegisterViewSet(viewsets.ViewSet):
                 import pdb
                 pdb.set_trace()
                 if serializer.is_valid(raise_exception=True):
-                    breakpoint()
                     if len(User.objects.filter(email=serializer.data['email'])):
                         raise ValidationError({"email": "This email has been used already."})
                     user = serializer.create(serializer.validated_data)
