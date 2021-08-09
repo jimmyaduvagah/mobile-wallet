@@ -5,9 +5,14 @@ on: [push]
 jobs:
   builds:
     runs-on: ubuntu-latest
+    env: 
+      OPENEXCHANGERATEAPI: d870a9424ea744069b50cebbd3ebcf84
+      SECRET_KEY: rklob1b&y4#i6bu)yhg!(t4zyw)072j-5+tf6^@fw@mzgd8&rk
+      DATABASE_URL: postgres://mylaptop:asante@127.0.0.1:5432/pesa_exchange
+      port DJANGO_SETTINGS_MODULE: mobile_wallet.config.settings
     strategy:
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.7, 3.8]
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
@@ -27,11 +32,6 @@ jobs:
 
       - name: Test with pytest
         run: |
-          export OPENEXCHANGERATEAPI='d870a9424ea744069b50cebbd3ebcf84'
-          export SECRET_KEY='rklob1b&y4#i6bu)yhg!(t4zyw)072j-5+tf6^@fw@mzgd8&rk'
-          export DATABASE_URL='postgres://mylaptop:asante@127.0.0.1:5432/pesa_exchange'
-          export DJANGO_SETTINGS_MODULE='mobile_wallet.config.settings'
-
           pytest
 
       - name: Run coverage Report
