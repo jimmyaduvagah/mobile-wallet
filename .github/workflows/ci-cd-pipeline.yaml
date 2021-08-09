@@ -27,7 +27,7 @@ jobs:
       - name: Test with pytest
         run: |
           coverage erase
-          py.test --cov=mobile_wallet tests/{posargs}
+          py.test --cov
 
       - name: Run coverage Report
         run: |
