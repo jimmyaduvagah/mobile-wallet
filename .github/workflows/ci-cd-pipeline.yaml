@@ -27,7 +27,11 @@ jobs:
 
       - name: Test with pytest
         run: |
-          source env.sh
+          export OPENEXCHANGERATEAPI='d870a9424ea744069b50cebbd3ebcf84'
+          export SECRET_KEY='rklob1b&y4#i6bu)yhg!(t4zyw)072j-5+tf6^@fw@mzgd8&rk'
+          export DATABASE_URL='postgres://mylaptop:asante@127.0.0.1:5432/pesa_exchange'
+          export DJANGO_SETTINGS_MODULE='mobile_wallet.config.settings'
+
           pytest
 
       - name: Run coverage Report
