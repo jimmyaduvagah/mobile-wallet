@@ -19,6 +19,17 @@ jobs:
           pip install flake8 pytest pytest-cov tox
 
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Use Tox to run linter and test with pytest
+      - name: Lint with flake8
         run: |
-          tox
+          flake8 mobile_wallet/  --count --show-source --statistics 
+          flake8 mobile_wallet/  --exit-zero --max-complexity=15 --max-line-length=99 --statistics
+
+      - name: Test with pytest
+        run: |
+          coverage erase
+          py.test --cov=mobile_wallet tests/{posargs}
+
+      - name: Run coverage Report
+        run: |
+          coverage html
+          coverage report --fail-under=100 --show-missing  
