@@ -22,7 +22,7 @@ jobs:
       - name: Lint with flake8
         run: |
           flake8 ../../mobile_wallet/  --count --show-source --statistics 
-          flake8 mobile_wallet/  --exit-zero --max-complexity=15 --max-line-length=99 --statistics
+          flake8 ../../mobile_wallet/  --exit-zero --max-complexity=15 --max-line-length=99 --statistics
 
       - name: Test with pytest
         run: |
