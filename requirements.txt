@@ -8,7 +8,7 @@ django-ses
 django>=3.1.0
 psycopg2
 celery
-djangorestframework-simplejwt==4.7.2
+djangorestframework-simplejwt
 raven
 django-sentry-400-middleware
 ipython
