@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    # mobile_wallet.config
     # project apps
     'mobile_wallet.users',
     'mobile_wallet.currency',
@@ -95,6 +94,18 @@ WSGI_APPLICATION = 'mobile_wallet.config.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(env='DATABASE_URL')
+}
+
+if os.environ.get('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+           'ENGINE': 'django.db.backends.postgresql',
+           'NAME': 'github_actions',
+           'USER': 'postgres',
+           'PASSWORD': 'postgres',
+           'HOST': '127.0.0.1',
+           'PORT': '5432',
+    }
 }
 
 REST_FRAMEWORK = {
