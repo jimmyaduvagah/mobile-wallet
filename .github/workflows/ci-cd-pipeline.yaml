@@ -51,7 +51,7 @@ jobs:
 
       - name: Test with pytest
         run: |
-          py.test
+          py.test --cov=mobile_wallet tests/{posargs}
 
       - name: Run coverage Report
         run: |
